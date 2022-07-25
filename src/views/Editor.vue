@@ -1,6 +1,5 @@
 <template>
-  <div>我是home</div>
-  <el-button type="primary">Primary</el-button>
+  <div>editor</div>
 </template>
 
 <script>
@@ -10,5 +9,4 @@ export default {
 </script>
 
 <style>
-
 </style>

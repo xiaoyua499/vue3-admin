@@ -1,11 +1,8 @@
-<script setup>
-
-</script>
-
 <template>
   <div class="header">
     <div class="header-left">
-      <el-button>
+      <!-- 侧边栏伸缩按钮 -->
+      <el-button @click="stretching">
         <el-icon>
           <Menu />
         </el-icon>
@@ -24,12 +21,32 @@
   </div>
 </template>
 
-<style scoped>
+<script>
+import { mapMutations, mapState } from 'vuex';
+
+
+export default {
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    ...mapMutations('home', ['updataStretch']),
+    stretching(){
+      this.updataStretch()
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin: 10px; */
+  margin: 0 10px;
+  padding: 0 ;
   width: 100%;
   height: 70px;
   background-color: #242f42;

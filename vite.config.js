@@ -14,5 +14,17 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-  ]
+
+  ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        less: {
+          charset: false,
+          additionalData: '@import "./src/assets/css/base.less;',
+        },
+      }
+    }
+  }
+
 })

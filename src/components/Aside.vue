@@ -1,39 +1,46 @@
 <template>
-  <el-col :span="15">
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-      <el-menu-item :index="item.index" v-for="item in multilevelMenu" :key="item.index">
+  <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="stretch" @open="handleOpen" @close="handleClose">
+    <div v-for="item in items" :key="items.index">
+      <el-menu-item :index="item.index" v-if="!item.subs" @click="goRouter(item.index)">
         <el-icon>
           <component :is="item.icon" />
         </el-icon>
-        <span>{{ item.title }}</span>
+        <span v-show="!stretch">{{ item.title }}</span>
       </el-menu-item>
-      <el-sub-menu :index="item.index" v-for="item in onMultilevelMenu" :key="item.index">
-        <template #title>
-          <el-icon>
-            <component :is="item.icon" />
-          </el-icon>
-          <span>{{ item.title }}</span>
-        </template>
-        <el-menu-item-group v-for="item2 in item.subs">
-          <el-menu-item :index="item2.index">{{ item2.title }}</el-menu-item>
-        </el-menu-item-group>
-        <!-- <el-sub-menu :index="item2.index" v-for="item2 in item.subs">
-          <template #title>{{ item2.title }}</template>
-          <el-menu-item :index="item2.subs.index" v-for="item3 in item2.subs">{{ item3.title }}</el-menu-item>
-        </el-sub-menu> -->
-      </el-sub-menu>
-    </el-menu>
-  </el-col>
+      <div v-else>
+        <el-sub-menu :index="item.index">
+          <template #title>
+            <el-icon>
+              <component :is="item.icon" />
+            </el-icon>
+            <span v-show="!stretch">{{ item.title }}</span>
+          </template>
+          <div v-for="item2 in item.subs" :key="item2.index">
+            <el-menu-item-group v-if="!item2.subs" @click="goRouter(item2.index)">
+              <el-menu-item :index="item2.index" v-if="!item2.subs">{{ item2.title }}</el-menu-item>
+            </el-menu-item-group>
+            <el-sub-menu :index="item2.index" v-else>
+              <template #title>{{ item2.title }}</template>
+              <el-menu-item :index="item3.index" v-for="item3 in item2.subs" @click="goRouter(item3.index)">{{
+                item3.title }}</el-menu-item>
+            </el-sub-menu>
+          </div>
+        </el-sub-menu>
+      </div>
+    </div>
+  </el-menu>
 </template>
 
 <script>
 import { computed, onMounted } from 'vue';
+import { mapState, useStore } from 'vuex';
+import router from '../router';
 export default {
   setup() {
     const items = [
       {
         icon: "HomeFilled",
-        index: "/dashboard",
+        index: "/",
         title: "系统首页",
       },
       {
@@ -54,12 +61,10 @@ export default {
           {
             index: "/form",
             title: "基本表单",
-            subs: false
           },
           {
             index: "/upload",
             title: "文件上传",
-            subs: false
           },
           {
             index: "4",
@@ -69,28 +74,9 @@ export default {
                 index: "/editor",
                 title: "富文本编辑器",
               },
-              {
-                index: "/markdown",
-                title: "markdown编辑器",
-              },
             ],
           },
         ],
-      },
-      {
-        icon: "Orange",
-        index: "/icon",
-        title: "自定义图标",
-      },
-      {
-        icon: "HelpFilled",
-        index: "/charts",
-        title: "schart图表",
-      },
-      {
-        icon: "Basketball",
-        index: "/i18n",
-        title: "国际化功能",
       },
       {
         icon: "WarningFilled",
@@ -100,16 +86,18 @@ export default {
           {
             index: "/permission",
             title: "权限测试",
-            subs: false
           },
           {
             index: "/404",
             title: "404页面",
-            subs: false
           },
         ],
       },
     ];
+    const goRouter = (index)=>{
+      router.push(index)
+      // console.log(index);
+    }
     const handleOpen = (key, keyPath) => {
       // console.log(key)
       // const item = items.filter(item => item.index === key)
@@ -119,27 +107,25 @@ export default {
     const handleClose = (key, keyPath) => {
       // console.log(key, keyPath)
     }
-    const multilevelMenu = computed(() => {
-      return items.filter(item => !item.subs)
-    })
-    const onMultilevelMenu = computed(() => {
-      return items.filter(item => item.subs)
-    })
     return {
       items,
       handleOpen,
       handleClose,
-      onMultilevelMenu,
-      multilevelMenu,
+      goRouter
     }
   },
-
+  computed: {
+    ...mapState('home', ['stretch'])
+  }
 
 }
 </script>
 
 <style scoped>
-.el-col {
-  margin: 10px;
+.el-menu {
+  margin-top: 10px;
+}
+span{
+  margin-right: 70px;
 }
 </style>
