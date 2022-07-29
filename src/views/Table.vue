@@ -43,7 +43,6 @@
           </el-table-column>
           <el-table-column prop="address" label="头像" />
           <el-table-column prop="address" label="地址" />
-
           <el-table-column prop="address" label="状态" width="100">
             <template #default="scope">
               <el-tag class="ml-2"
