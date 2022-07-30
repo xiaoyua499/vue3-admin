@@ -15,8 +15,8 @@
     </div>
     <div class="err-container">
       <div class="err">
-        <h1 class="title">4<span>0</span>4</h1>
-        <p>啊哦~~，你访问的页面不存在！！</p>
+        <h1 class="title">4<span>0</span>3</h1>
+        <p>啊哦~~，你没有访问权限访问该页面！！</p>
         <router-link to="/">
           <el-button type="primary">返回首页</el-button>
         </router-link>

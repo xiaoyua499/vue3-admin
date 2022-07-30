@@ -31,19 +31,41 @@ const routes = [
       },
       {
         path: '/permission',
+        meta: {
+          permission: true
+        },
         component: () => import('../views/Permission.vue')
       },
       {
         path: '/404',
         component: () => import('../views/404.vue')
+      },
+      {
+        path: '/403',
+        component: () => import('../views/403.vue')
       }
-    ]
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('../views/Login.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const user = localStorage.getItem('user')
+  if (!user && to.path !== '/login') {
+    next('/login')
+  } else if (to.meta.permission) {
+    user === 'admin' ? next() : next('/403')
+  } else {
+    next()
+  }
 })
 
 export default router

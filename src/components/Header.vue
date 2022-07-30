@@ -14,28 +14,57 @@
         <Bell />
       </el-icon>
       <div class="block">
-        <el-avatar :size="50" :src="circleUrl" />
+        <img src="../assets/img/img.jpg" alt="">
       </div>
-      <span class="user-name">admin</span>
+      <div>
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link user-name">
+            admin
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <a href="https://github.com/xiaoyua499/vue3-admin">
+                <el-dropdown-item>项目仓库</el-dropdown-item>
+              </a>
+              <el-dropdown-item>
+                个人中心
+              </el-dropdown-item>
+              <el-dropdown-item @click="goLogin">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+// import { useRoute } from 'vue-router';
 import { mapMutations, mapState } from 'vuex';
+import router from '../router';
 
 
 export default {
-  data() {
+  setup() {
+    // const router = useRoute()
+    const goLogin = () => {
+      router.push('/login')
+    }
     return {
-
+      router,
+      goLogin
     }
   },
   methods: {
     ...mapMutations('home', ['updataStretch']),
-    stretching(){
+    stretching() {
       this.updataStretch()
-    }
+    },
+
+
   }
 }
 </script>
@@ -46,7 +75,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin: 0 10px;
-  padding: 0 ;
+  padding: 0;
   width: 100%;
   height: 70px;
   background-color: #242f42;
@@ -74,17 +103,25 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin: 10px;
-}
 
-.heder-right .el-icon {
-  color: #fff;
-}
+  .el-icon {
+    color: #fff;
+  }
 
-.heder-right .user-name {
-  color: #fff;
-}
+  .user-name {
+    color: #fff;
+  }
 
-.heder-right .block {
-  margin: 5px;
+
+  .block {
+    margin: 5px;
+
+    img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+  }
+
 }
 </style>
