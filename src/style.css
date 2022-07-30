@@ -79,7 +79,7 @@ body,
   /* margin: 0 auto; */
   /* padding: 2rem; */
   /* text-align: center; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 @media (prefers-color-scheme: light) {
