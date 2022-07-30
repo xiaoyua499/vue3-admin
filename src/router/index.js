@@ -10,6 +10,10 @@ const routes = [
         component: () => import('../views/Home.vue')
       },
       {
+        path: '/user',
+        component: () => import('../views/user.vue')
+      },
+      {
         path: '/table',
         component: () => import('../views/Table.vue')
       },
@@ -58,11 +62,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const user = localStorage.getItem('user')
-  if (!user && to.path !== '/login') {
+  const name = sessionStorage.getItem('name')
+  if (!name && to.path !== '/login') {
     next('/login')
   } else if (to.meta.permission) {
-    user === 'admin' ? next() : next('/403')
+    name === 'admin' ? next() : next('/403')
   } else {
     next()
   }

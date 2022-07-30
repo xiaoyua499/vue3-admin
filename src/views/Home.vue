@@ -6,7 +6,7 @@
           <div class="user-top">
             <img src="../assets/img/img.jpg" alt="">
             <div class="user-top-right">
-              <h1 class="name">admin</h1>
+              <h1 class="name">{{ user.name }}</h1>
               <span>超级管理员</span>
             </div>
           </div>
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   setup() {
     const tableData = [
@@ -140,6 +141,9 @@ export default {
     return {
       tableData,
     }
+  },
+  computed: {
+    ...mapState('login', ['user'])
   },
   mounted() {
     // 基于准备好的dom，初始化echarts实例

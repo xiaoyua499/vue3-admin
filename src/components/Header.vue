@@ -19,7 +19,7 @@
       <div>
         <el-dropdown trigger="click">
           <span class="el-dropdown-link user-name">
-            admin
+            {{ user.name }}
             <el-icon class="el-icon--right">
               <arrow-down />
             </el-icon>
@@ -29,7 +29,7 @@
               <a href="https://github.com/xiaoyua499/vue3-admin">
                 <el-dropdown-item>项目仓库</el-dropdown-item>
               </a>
-              <el-dropdown-item>
+              <el-dropdown-item @click="goUser">
                 个人中心
               </el-dropdown-item>
               <el-dropdown-item @click="goLogin">退出登录</el-dropdown-item>
@@ -49,14 +49,22 @@ import router from '../router';
 
 export default {
   setup() {
-    // const router = useRoute()
+    //点击进入个人中心
+    const goUser = ()=>{
+      router.push('/user')
+    }
+    //点击进入登录页面
     const goLogin = () => {
       router.push('/login')
     }
     return {
       router,
-      goLogin
+      goLogin,
+      goUser
     }
+  },
+  computed: {
+    ...mapState('login', ['user'])
   },
   methods: {
     ...mapMutations('home', ['updataStretch']),

@@ -31,7 +31,7 @@
 <script>
 import { reactive, ref } from 'vue'
 import router from '../router'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   setup() {
     const formLabelAlign = reactive({
@@ -44,11 +44,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('login', ['updataPermissions']),
+    ...mapMutations('login', ['updataUser']),
     isLogin() {
       if (this.formLabelAlign.name !== '' && this.formLabelAlign.password !== '') {
-        localStorage.setItem('user', this.formLabelAlign.name)
-        this.updataPermissions()
+        sessionStorage.setItem('name', this.formLabelAlign.name)
+        this.updataUser(this.formLabelAlign)
         router.push('/')
       } else {
         alert('用户名或密码不能为空！！')
